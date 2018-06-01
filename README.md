@@ -66,6 +66,28 @@ kubectl create -f ingress-test-tls.yaml
 
 
 
+### TCP 服务暴露
+
+```
+TCP 服务暴露需要更新 configmap，以 redis 服务为例:
+cat nginx-ingress-tcp-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: nginx-ingress-tcp
+  namespace: kube-system
+data:
+  9000: "default/redis:6379"
+  
+ingress-controller需要添加启动参数，
+- --tcp-services-configmap=$(POD_NAMESPACE)/nginx-ingress-tcp
+
+UDP服务类似。
+```
+
+
+
 #### 参考文档
 
 https://mritd.me/2017/03/04/how-to-use-nginx-ingress/
