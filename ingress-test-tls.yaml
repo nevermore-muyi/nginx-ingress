@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: monitoring
+spec:
+  tls:
+  - hosts:
+    - my.com
+    secretName: ingress-secret
+  rules:
+  - host: my.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: prometheus
+          servicePort: 9090
